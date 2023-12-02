@@ -77,13 +77,8 @@ VecDoub ImageScaler::getThetaMax(Similarity *similarity, Interpolation *interpol
 	NRmatrix<double> deformedImage(imageToScale.ncols(), imageToScale.nrows());
 	NRmatrix<bool> binaryImage(imageToScale.ncols(), imageToScale.nrows());
 	def.getDeformation(imageToScale, theta, binaryImage, deformedImage, interpolation);
-	if (similarity = 0)
-		std::cout << "Similarity for this Thetamax : " << similarity->getSimilarity(imageToScale, deformedImage, binaryImage) << endl;
-	else
-	{
-		DefaultSimilarity defaultSimilarity;
-		std::cout << "Similarity for this Thetamax : " << defaultSimilarity.getSimilarity(imageToScale, deformedImage, binaryImage) << endl;
-	}
+	std::cout << "Similarity for this Thetamax : " << similarity->getSimilarity(imageToScale, deformedImage, binaryImage) << endl;
+
 	this->writeFileFromMatrix(SAVING_PATH, deformedImage);
 	return Thetamax;
 }

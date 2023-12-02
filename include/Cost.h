@@ -13,11 +13,11 @@ private:
 	Interpolation *interpolation;
 
 public:
-	Cost(NRmatrix<double> Iref,
-		 NRmatrix<double> I,
-		 Similarity *sim,
-		 Interpolation *interp);
-	double getCost(const double *theta) const;
+	Cost(NRmatrix<double>,
+		 NRmatrix<double>,
+		 Similarity *,
+		 Interpolation *);
+	double getCost(const double *) const;
 	double operator()(const VecDoub &u) const
 	{
 		double *theta = new double[u.size()];

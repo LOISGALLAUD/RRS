@@ -2,31 +2,20 @@
 #include "nr3.h"
 #include "Similarity.h"
 
-Cost::Cost(NRmatrix<double> referenceImage,
-		   NRmatrix<double> imageToScale,
-		   Similarity *sim,
-		   Interpolation *interp)
+Cost::Cost(NRmatrix<double> referenceImage, NRmatrix<double> I, Similarity *sim, Interpolation *interp)
 {
 	this->referenceImage = referenceImage;
-	this->imageToScale = imageToScale;
-	this->similarity = similarity;
-	this->interpolation = interpolation;
+	this->imageToScale = I;
+	this->similarity = sim;
+	this->interpolation = interp;
 }
 
 double Cost::getCost(const double *theta) const
 {
-	Deformation def;
+	// Return the cost of the transformation for the given parameters (theta)
+	Deformation deformation;
 	NRmatrix<double> deformedImage(imageToScale.nrows(), imageToScale.ncols());
 	NRmatrix<bool> binaryImage(imageToScale.nrows(), imageToScale.ncols());
-	def.getDeformation(imageToScale, theta, binaryImage, deformedImage, interpolation);
-
-	if (similarity == 0)
-	{
-		DefaultSimilarity simDef;
-		return simDef.getSimilarity(referenceImage, deformedImage, binaryImage);
-	}
-	else
-	{
-		return similarity->getSimilarity(referenceImage, deformedImage, binaryImage);
-	}
+	deformation.getDeformation(imageToScale, theta, binaryImage, deformedImage, interpolation);
+	return similarity->getSimilarity(referenceImage, deformedImage, binaryImage);
 }

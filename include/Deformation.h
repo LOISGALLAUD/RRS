@@ -7,9 +7,9 @@
 class Deformation
 {
 public:
-	void getDeformation(const NRmatrix<double> &image,
-						const double *theta,
-						NRmatrix<bool> &bonaryImage,
-						NRmatrix<double> &deformedImage,
-						Interpolation *interpolation);
+	void getDeformation(const NRmatrix<double> &,
+						const double *,
+						NRmatrix<bool> &,
+						NRmatrix<double> &,
+						Interpolation *);
 };

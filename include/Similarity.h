@@ -6,15 +6,7 @@
 class Similarity
 {
 public:
-	virtual double getSimilarity(const NRmatrix<double> &referenceImage,
-								 const NRmatrix<double> &de,
-								 const NRmatrix<bool> &binaryImage) = 0;
-};
-
-class DefaultSimilarity : Similarity
-{
-public:
-	virtual double getSimilarity(const NRmatrix<double> &referenceImage,
-								 const NRmatrix<double> &deformedImage,
-								 const NRmatrix<bool> &binaryImage);
+	double getSimilarity(const NRmatrix<double> &,
+						 const NRmatrix<double> &,
+						 const NRmatrix<bool> &);
 };

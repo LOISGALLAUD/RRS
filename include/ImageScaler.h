@@ -16,8 +16,8 @@ private:
 	Transformation *transformation;
 
 public:
-	ImageScaler(std::string imageToScalePath, std::string referenceImagePath);
-	VecDoub getThetaMax(Similarity *sim = 0, Interpolation *interp = 0);
+	ImageScaler(std::string, std::string);
+	VecDoub getThetaMax(Similarity * = 0, Interpolation * = 0);
 	NRmatrix<double> readImageFromPGM(const string &) const;
 	template <typename T>
 	void writeFileFromMatrix(const std::string &path, const NRmatrix<T> image) const

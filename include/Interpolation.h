@@ -5,17 +5,17 @@
 class Interpolation
 {
 public:
-	virtual bool getInterpolation(double x,
-								  double y,
-								  const NRmatrix<double> &Image,
-								  double &val);
+	virtual bool getInterpolation(double,
+								  double,
+								  const NRmatrix<double> &,
+								  double &);
 };
 
 class InterpolationNN : public Interpolation // Nearest Neighbor
 {
 public:
-	bool getInterpolation(double x,
-						  double y,
-						  const NRmatrix<double> &Image,
-						  double &val);
+	bool getInterpolation(double,
+						  double,
+						  const NRmatrix<double> &,
+						  double &);
 };
