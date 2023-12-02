@@ -10,7 +10,7 @@ ImageScaler::ImageScaler(std::string imageToScalePath, std::string referenceImag
 	this->referenceImage = this->readImageFromPGM(referenceImagePath);
 }
 
-NRmatrix<double> ImageScaler::readImageFromPGM(const string &path)
+NRmatrix<double> ImageScaler::readImageFromPGM(const string &path) const
 {
 	// Read an image from a PGM file
 	std::ifstream file(path);

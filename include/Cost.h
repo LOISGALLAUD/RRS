@@ -9,8 +9,8 @@ class Cost
 {
 private:
 	NRmatrix<double> referenceImage, imageToScale;
-	Similarity *sim;
-	Interpolation *interp;
+	Similarity *similarity;
+	Interpolation *interpolation;
 
 public:
 	Cost(NRmatrix<double> Iref,
