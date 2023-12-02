@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fstream>
+#include <iostream>
+
 #include "ImageScaler.h"
 #include "Similarity.h"
 #include "Interpolation.h"
@@ -124,9 +130,7 @@ VecDoub ImageScaler::getThetaMax(std::string imageToScalePath, std::string refer
 	NRmatrix<bool> binaryImage(imageToScale.ncols(), imageToScale.nrows());
 	def.getDeformation(imageToScale, theta, binaryImage, deformedImage, interpolation);
 	if (similarity = 0)
-	{
 		std::cout << "Similarity for this Thetamax : " << similarity->getSimilarity(imageToScale, deformedImage, binaryImage) << endl;
-	}
 	else
 	{
 		DefaultSimilarity defaultSimilarity;
