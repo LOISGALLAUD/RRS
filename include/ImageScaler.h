@@ -6,23 +6,47 @@
 #include "nr3.h"
 #include "amoeba.h"
 #include "Cost.h"
+#define SAVING_PATH "deformed.pgm"
 
 class ImageScaler
 {
+private:
+	NRmatrix<double> imageToScale;
+	NRmatrix<double> referenceImage;
+	Transformation *transformation;
+
 public:
+	ImageScaler(std::string imageToScalePath, std::string referenceImagePath);
+	VecDoub getThetaMax(Similarity *sim = 0, Interpolation *interp = 0);
 	NRmatrix<double> readImageFromPGM(const string &);
-	void writeFileFromMatrix(const string &, const NRmatrix<double>) const;
-	void writeFileFromMatrix(const string &, const NRmatrix<bool>) const;
-
-	VecDoub getThetaMax(string imageToScalePath,
-						string referenceImagePath,
-						string path,
-						Similarity *sim = 0,
-						Interpolation *interp = 0);
-
-	VecDoub getThetaMax(string imageToScalePath, string referenceImagePath, Similarity *sim = 0, Interpolation *interp = 0);
-	VecDoub getThetaMax(string imageToScalePath, string referenceImagePath, Interpolation *interp);
-	VecDoub getThetaMax(string imageToScalePath, string referenceImagePath, Similarity *sim);
-	VecDoub getThetaMax(string imageToScalePath, string referenceImagePath, string path, Interpolation *interp);
-	VecDoub getThetaMax(string imageToScalePath, string referenceImagePath, string path, Similarity *sim);
+	template <typename T>
+	void writeFileFromMatrix(const std::string &path, const NRmatrix<T> image) const
+	{
+		std::ofstream file(path);
+		if (file.fail())
+		{
+			std::cout << "Error while opening the file " << path << std::endl;
+		}
+		else
+		{
+			int w = image.nrows();
+			int h = image.ncols();
+			file << "P2 " << w << " " << h << " 255" << std::endl;
+			for (int k = 0; k < w; k++)
+			{
+				for (int l = 0; l < h; l++)
+				{
+					if constexpr (std::is_same_v<T, bool>)
+					{
+						file << image[k][l] * 255 << " ";
+					}
+					else
+					{
+						file << image[k][l] << " ";
+					}
+				}
+				file << std::endl;
+			}
+		}
+	}
 };

@@ -8,7 +8,7 @@
 
 int main()
 {
-	ImageScaler imageScaler;
+	ImageScaler imageScaler(IMAGE_TO_SCALE, REFERENCE_IMAGE);
 	std::string imageToScale = IMAGE_TO_SCALE;
 	std::string referenceImage = REFERENCE_IMAGE;
 	std::string NNdeformed = NN_DEFORMED;
@@ -16,10 +16,10 @@ int main()
 	VecDoub theta_max;
 
 	std::cout << "Result with basic bilinear interpolation method:" << std::endl;
-	theta_max = imageScaler.getThetaMax(imageToScale, referenceImage);
+	theta_max = imageScaler.getThetaMax();
 
 	std::cout << "Result with nearest neighbor method:" << std::endl;
-	theta_max = imageScaler.getThetaMax(imageToScale, referenceImage, NNdeformed, 0, &interp);
+	theta_max = imageScaler.getThetaMax(0, &interp);
 
 	return 0;
 }

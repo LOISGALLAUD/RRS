@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fstream>
-#include <iostream>
-
 #include "ImageScaler.h"
 #include "Similarity.h"
 #include "Interpolation.h"
 #include "amoeba.h"
 #include "Cost.h"
+
+ImageScaler::ImageScaler(std::string imageToScalePath, std::string referenceImagePath)
+{
+	this->imageToScale = this->readImageFromPGM(imageToScalePath);
+	this->referenceImage = this->readImageFromPGM(referenceImagePath);
+}
 
 NRmatrix<double> ImageScaler::readImageFromPGM(const string &path)
 {
@@ -40,60 +40,8 @@ NRmatrix<double> ImageScaler::readImageFromPGM(const string &path)
 	}
 }
 
-void ImageScaler::writeFileFromMatrix(const string &path, const NRmatrix<double> image) const
+VecDoub ImageScaler::getThetaMax(Similarity *similarity, Interpolation *interpolation)
 {
-	// Write an image in a PGM file
-	ofstream file(path);
-	if (file.fail())
-	{
-		std::cout << "Error while opening the file " << path << std::endl;
-	}
-	else
-	{
-		int w = image.nrows();
-		int h = image.ncols();
-		file << "P2 " << w << " " << h << " 255" << endl;
-		for (int k = 0; k < w; k++)
-		{
-			for (int l = 0; l < h; l++)
-			{
-				file << image[k][l] << " ";
-			}
-			file << endl;
-		}
-	}
-}
-
-void ImageScaler::writeFileFromMatrix(const string &path, const NRmatrix<bool> image) const
-{
-	// Write an image in a PGM file
-	ofstream file(path);
-	if (file.fail())
-	{
-		std::cout << "Error while opening the file " << path << std::endl;
-	}
-	else
-	{
-		int w = image.nrows();
-		int h = image.ncols();
-		file << "P2 " << w << " " << h << " 255" << endl;
-		for (int k = 0; k < w; k++)
-		{
-			for (int l = 0; l < h; l++)
-			{
-				file << image[k][l] * 255 << " ";
-			}
-			file << endl;
-		}
-	}
-}
-
-VecDoub ImageScaler::getThetaMax(std::string imageToScalePath, std::string referenceImagePath,
-								 std::string savingPath, Similarity *similarity, Interpolation *interpolation)
-{
-	NRmatrix<double> imageToScale = this->readImageFromPGM(imageToScalePath);
-	NRmatrix<double> referenceImage = this->readImageFromPGM(referenceImagePath);
-
 	Cost cost(imageToScale, referenceImage, similarity, interpolation);
 	Amoeba amoeba(0.01);
 
@@ -136,34 +84,6 @@ VecDoub ImageScaler::getThetaMax(std::string imageToScalePath, std::string refer
 		DefaultSimilarity defaultSimilarity;
 		std::cout << "Similarity for this Thetamax : " << defaultSimilarity.getSimilarity(imageToScale, deformedImage, binaryImage) << endl;
 	}
-	this->writeFileFromMatrix(savingPath, deformedImage);
+	this->writeFileFromMatrix(SAVING_PATH, deformedImage);
 	return Thetamax;
-}
-
-VecDoub ImageScaler::getThetaMax(string imageToScalePath, string referenceImagePath, Similarity *sim, Interpolation *interp)
-{
-	string path = "deformedImage.pgm";
-	return this->getThetaMax(imageToScalePath, referenceImagePath, path, sim, interp);
-}
-
-VecDoub ImageScaler::getThetaMax(string imageToScalePath, string referenceImagePath, Interpolation *interp)
-{
-	string path = "deformedImage.pgm";
-	return this->getThetaMax(imageToScalePath, referenceImagePath, path, 0, interp);
-}
-
-VecDoub ImageScaler::getThetaMax(string imageToScalePath, string referenceImagePath, Similarity *sim)
-{
-	string path = "deformedImage.pgm";
-	return this->getThetaMax(imageToScalePath, referenceImagePath, path, sim, 0);
-}
-
-VecDoub ImageScaler::getThetaMax(string imageToScalePath, string referenceImagePath, string path, Similarity *sim)
-{
-	return this->getThetaMax(imageToScalePath, referenceImagePath, path, sim, 0);
-}
-
-VecDoub ImageScaler::getThetaMax(string imageToScalePath, string referenceImagePath, string path, Interpolation *interp)
-{
-	return this->getThetaMax(imageToScalePath, referenceImagePath, path, 0, interp);
 }
