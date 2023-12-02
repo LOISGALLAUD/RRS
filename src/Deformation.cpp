@@ -8,14 +8,14 @@ void Deformation::getDeformation(const NRmatrix<double> &I, const double *theta,
 	NRmatrix<double> copyImage(I);
 	Transformation transf;
 	double x, y;
-	for (unsigned int i = 0; i < copyImage.nrows(); i++)
+	for (size_t i = 0; i < copyImage.nrows(); i++)
 	{
-		for (unsigned int j = 0; j < copyImage.ncols(); j++)
+		for (size_t j = 0; j < copyImage.ncols(); j++)
 		{
 			transf.getNewpixels(i, j, theta, x, y);
 			if (interp == 0)
 			{
-				InterpolationDefault interp;
+				Interpolation interp;
 				Ibin[i][j] = interp.getInterpolation(x, y, I, Idef[i][j]);
 			}
 			else

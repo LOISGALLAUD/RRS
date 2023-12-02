@@ -8,16 +8,7 @@ public:
 	virtual bool getInterpolation(double x,
 								  double y,
 								  const NRmatrix<double> &Image,
-								  double &val) = 0;
-};
-
-class InterpolationDefault : public Interpolation
-{
-public:
-	bool getInterpolation(double x,
-						  double y,
-						  const NRmatrix<double> &Image,
-						  double &val);
+								  double &val);
 };
 
 class InterpolationNN : public Interpolation // Nearest Neighbor

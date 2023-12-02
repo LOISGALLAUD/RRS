@@ -4,5 +4,5 @@
 class Transformation
 {
 public:
-	void getNewpixels(double x, double y, const double *THETA, double &xp, double &yp);
+	void getNewpixels(double, double, const double *, double &, double &);
 };

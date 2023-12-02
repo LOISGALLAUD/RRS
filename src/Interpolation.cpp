@@ -19,8 +19,8 @@ bool InterpolationNN::getInterpolation(double x, double y, const NRmatrix<double
     }
 }
 
-bool InterpolationDefault::getInterpolation(double x, double y,
-                                            const NRmatrix<double> &image, double &val)
+bool Interpolation::getInterpolation(double x, double y,
+                                     const NRmatrix<double> &image, double &val)
 {
     double H = image.nrows(), L = image.ncols();
     if ((x < 0) || (x > H - 1) || (y < 0) || (y > L - 1))
