@@ -1,1 +1,0 @@
-/usr/bin/c++ -g -rdynamic CMakeFiles/main.dir/src/Cost.cpp.o CMakeFiles/main.dir/src/Deformation.cpp.o CMakeFiles/main.dir/src/ImageScaler.cpp.o CMakeFiles/main.dir/src/Interpolation.cpp.o CMakeFiles/main.dir/src/Similarity.cpp.o CMakeFiles/main.dir/src/Transformation.cpp.o CMakeFiles/main.dir/src/main.cpp.o -o ../bin/main 
