@@ -8,7 +8,7 @@
 #include "Cost.h"
 #define SAVING_PATH "deformed.pgm"
 
-class ImageScaler
+class RigidRescaler
 {
 private:
 	NRmatrix<double> imageToScale;
@@ -16,7 +16,7 @@ private:
 	Transformation *transformation;
 
 public:
-	ImageScaler(std::string, std::string);
+	RigidRescaler(std::string, std::string);
 	VecDoub getThetaMax(InterpolationMethod *);
 	NRmatrix<double> readImageFromPGM(const string &) const;
 	template <typename T>

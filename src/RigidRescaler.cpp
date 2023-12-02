@@ -1,4 +1,4 @@
-#include "ImageScaler.h"
+#include "RigidRescaler.h"
 #include "Similarity.h"
 #include "Interpolation.h"
 #include "amoeba.h"
@@ -6,13 +6,13 @@
 
 #define EPSILON 0.01
 
-ImageScaler::ImageScaler(std::string imageToScalePath, std::string referenceImagePath)
+RigidRescaler::RigidRescaler(std::string imageToScalePath, std::string referenceImagePath)
 {
 	this->imageToScale = this->readImageFromPGM(imageToScalePath);
 	this->referenceImage = this->readImageFromPGM(referenceImagePath);
 }
 
-NRmatrix<double> ImageScaler::readImageFromPGM(const string &path) const
+NRmatrix<double> RigidRescaler::readImageFromPGM(const string &path) const
 {
 	// Read an image from a PGM file
 	std::ifstream file(path);
@@ -42,7 +42,7 @@ NRmatrix<double> ImageScaler::readImageFromPGM(const string &path) const
 	}
 }
 
-VecDoub ImageScaler::getThetaMax(InterpolationMethod *interpolation)
+VecDoub RigidRescaler::getThetaMax(InterpolationMethod *interpolation)
 {
 	Similarity *similarity = new Similarity();
 	Cost cost(imageToScale, referenceImage, similarity, interpolation);
