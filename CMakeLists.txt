@@ -20,6 +20,6 @@ file(
 )
 # Crée l'exécutable monExe à partir de la liste des fichiers .cpp
 add_executable(
-   main
+   rrs
    ${srcFiles}
 )
