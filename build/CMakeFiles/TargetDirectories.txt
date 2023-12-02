@@ -1,0 +1,3 @@
+/home/lois/Documents/code/cpp/COO_Projet/build/CMakeFiles/main.dir
+/home/lois/Documents/code/cpp/COO_Projet/build/CMakeFiles/edit_cache.dir
+/home/lois/Documents/code/cpp/COO_Projet/build/CMakeFiles/rebuild_cache.dir
