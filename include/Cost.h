@@ -10,13 +10,13 @@ class Cost
 private:
 	NRmatrix<double> referenceImage, imageToScale;
 	Similarity *similarity;
-	Interpolation *interpolation;
+	InterpolationMethod *interpolation;
 
 public:
 	Cost(NRmatrix<double>,
 		 NRmatrix<double>,
 		 Similarity *,
-		 Interpolation *);
+		 InterpolationMethod *);
 	double getCost(const double *) const;
 	double operator()(const VecDoub &u) const
 	{

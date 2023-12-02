@@ -3,7 +3,11 @@
 #include "Transformation.h"
 #include "Interpolation.h"
 
-void Deformation::getDeformation(const NRmatrix<double> &I, const double *theta, NRmatrix<bool> &Ibin, NRmatrix<double> &Idef, Interpolation *interp)
+void Deformation::getDeformation(const NRmatrix<double> &I,
+								 const double *theta,
+								 NRmatrix<bool> &binaryImage,
+								 NRmatrix<double> &deformedImage,
+								 InterpolationMethod *interp)
 {
 	NRmatrix<double> copyImage(I);
 	Transformation transf;
@@ -16,10 +20,10 @@ void Deformation::getDeformation(const NRmatrix<double> &I, const double *theta,
 			if (interp == 0)
 			{
 				Interpolation interp;
-				Ibin[i][j] = interp.getInterpolation(x, y, I, Idef[i][j]);
+				binaryImage[i][j] = interp.getInterpolation(x, y, I, deformedImage[i][j]);
 			}
 			else
-				Ibin[i][j] = interp->getInterpolation(x, y, I, Idef[i][j]);
+				binaryImage[i][j] = interp->getInterpolation(x, y, I, deformedImage[i][j]);
 		}
 	}
 }

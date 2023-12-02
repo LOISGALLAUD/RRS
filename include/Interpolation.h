@@ -2,7 +2,15 @@
 
 #include "nr3.h"
 
-class Interpolation
+class InterpolationMethod
+{
+public:
+	virtual bool getInterpolation(double,
+								  double,
+								  const NRmatrix<double> &,
+								  double &) = 0;
+};
+class Interpolation : public InterpolationMethod
 {
 public:
 	virtual bool getInterpolation(double,
@@ -11,7 +19,7 @@ public:
 								  double &);
 };
 
-class InterpolationNN : public Interpolation // Nearest Neighbor
+class InterpolationNN : public InterpolationMethod // Nearest neighbor interpolation
 {
 public:
 	bool getInterpolation(double,

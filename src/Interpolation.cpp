@@ -11,7 +11,6 @@ bool InterpolationNN::getInterpolation(double x, double y, const NRmatrix<double
     }
     else
     {
-
         unsigned int i1 = floor(x + 0.5);
         unsigned int j1 = floor(y + 0.5);
         val = Image[i1][j1];

@@ -11,5 +11,5 @@ public:
 						const double *,
 						NRmatrix<bool> &,
 						NRmatrix<double> &,
-						Interpolation *);
+						InterpolationMethod *);
 };

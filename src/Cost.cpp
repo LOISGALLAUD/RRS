@@ -2,7 +2,7 @@
 #include "nr3.h"
 #include "Similarity.h"
 
-Cost::Cost(NRmatrix<double> referenceImage, NRmatrix<double> I, Similarity *sim, Interpolation *interp)
+Cost::Cost(NRmatrix<double> referenceImage, NRmatrix<double> I, Similarity *sim, InterpolationMethod *interp)
 {
 	this->referenceImage = referenceImage;
 	this->imageToScale = I;

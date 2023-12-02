@@ -4,6 +4,8 @@
 #include "amoeba.h"
 #include "Cost.h"
 
+#define EPSILON 0.01
+
 ImageScaler::ImageScaler(std::string imageToScalePath, std::string referenceImagePath)
 {
 	this->imageToScale = this->readImageFromPGM(imageToScalePath);
@@ -40,10 +42,11 @@ NRmatrix<double> ImageScaler::readImageFromPGM(const string &path) const
 	}
 }
 
-VecDoub ImageScaler::getThetaMax(Similarity *similarity, Interpolation *interpolation)
+VecDoub ImageScaler::getThetaMax(InterpolationMethod *interpolation)
 {
+	Similarity *similarity = new Similarity();
 	Cost cost(imageToScale, referenceImage, similarity, interpolation);
-	Amoeba amoeba(0.01);
+	Amoeba amoeba(EPSILON);
 
 	VecDoub ystart(3); // Starting point for the minimization
 	ystart[0] = 0;
@@ -51,12 +54,12 @@ VecDoub ImageScaler::getThetaMax(Similarity *similarity, Interpolation *interpol
 	ystart[2] = 0;
 
 	// Amoeba method to find the parameters of transformation minimizing cost
-	VecDoub Thetamax(3);
-	Thetamax = amoeba.minimize(ystart, 2., cost);
+	VecDoub thetatMax(3);
+	thetatMax = amoeba.minimize(ystart, 2., cost);
 
-	for (size_t i = 0; i < Thetamax.size(); i++)
+	for (size_t i = 0; i < thetatMax.size(); i++)
 	{
-		std::cout << Thetamax[i] << " ";
+		std::cout << "thetatMax[" << i << "] = " << thetatMax[i] << endl;
 	}
 	std::cout << endl;
 
@@ -66,9 +69,9 @@ VecDoub ImageScaler::getThetaMax(Similarity *similarity, Interpolation *interpol
 	 * and to apply the transformation to the image
 	 */
 	double *theta = new double[3];
-	theta[0] = Thetamax[0];
-	theta[1] = Thetamax[1];
-	theta[2] = Thetamax[2];
+	theta[0] = thetatMax[0];
+	theta[1] = thetatMax[1];
+	theta[2] = thetatMax[2];
 
 	// Recalculating the image I from Iref and theta
 	Deformation def;
@@ -77,8 +80,11 @@ VecDoub ImageScaler::getThetaMax(Similarity *similarity, Interpolation *interpol
 	NRmatrix<double> deformedImage(imageToScale.ncols(), imageToScale.nrows());
 	NRmatrix<bool> binaryImage(imageToScale.ncols(), imageToScale.nrows());
 	def.getDeformation(imageToScale, theta, binaryImage, deformedImage, interpolation);
-	std::cout << "Similarity for this Thetamax : " << similarity->getSimilarity(imageToScale, deformedImage, binaryImage) << endl;
+	std::cout << "Similarity for this thetatMax : " << similarity->getSimilarity(imageToScale, deformedImage, binaryImage) << endl;
 
 	this->writeFileFromMatrix(SAVING_PATH, deformedImage);
-	return Thetamax;
+
+	delete similarity;
+
+	return thetatMax;
 }
