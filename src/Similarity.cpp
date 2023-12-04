@@ -2,8 +2,8 @@
 #include "nr3.h"
 #include "Deformation.h"
 
-double Similarity::getSimilarity(const NRmatrix<double> &deformedImage,
-								 const NRmatrix<double> &referenceImage,
+double Similarity::getSimilarity(const NRmatrix<double> &referenceImage,
+								 const NRmatrix<double> &deformedImage,
 								 const NRmatrix<bool> &binaryImage)
 {
 	// Compute the similarity between the reference image and the deformed image

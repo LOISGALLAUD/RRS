@@ -30,10 +30,10 @@ int main()
 	std::cout << "\n---------------------------------------------------\n"
 			  << std::endl;
 
-	// std::cout << "Result with nearest neighbor method:" << std::endl;
-	// theta_max = rigidRescaler.getThetaMax(interpolationNN, SAVING_PATH);
-	// showThetaMax(theta_max);
-	// rigidRescaler.applyDeformation(theta_max, interpolationNN, SAVING_PATH);
+	std::cout << "Result with nearest neighbor method:" << std::endl;
+	theta_max = rigidRescaler.getThetaMax(interpolationNN, SAVING_PATH);
+	showThetaMax(theta_max);
+	rigidRescaler.applyDeformation(theta_max, interpolationNN, SAVING_PATH);
 
 	delete interpolation;
 	delete interpolationNN;

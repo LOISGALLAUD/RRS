@@ -4,7 +4,7 @@
 #include "amoeba.h"
 #include "Cost.h"
 
-#define EPSILON 0.01
+#define EPSILON 0.001
 
 RigidRescaler::RigidRescaler(std::string imageToScalePath, std::string referenceImagePath)
 {
@@ -66,18 +66,17 @@ void RigidRescaler::applyDeformation(const VecDoub &thetatMax,
 									 InterpolationMethod *interpolation,
 									 const std::string &savingPath)
 {
+	// Deforms the image to scale with the parameters of transformation
+	// in thetatMax and saves the result in savingPath
 	Deformation def;
 	Similarity sim;
 
-	// Deformed image
 	NRmatrix<double> deformedImage(imageToScale.ncols(), imageToScale.nrows());
 	NRmatrix<bool> binaryImage(imageToScale.ncols(), imageToScale.nrows());
 	def.getDeformation(imageToScale, thetatMax, binaryImage, deformedImage, interpolation);
 
-	// Calculate similarity
 	double similarityValue = sim.getSimilarity(deformedImage, referenceImage, binaryImage);
 	std::cout << "Similarity for this thetatMax : " << similarityValue << std::endl;
 
-	// Write deformed image to file
 	this->writeFileFromMatrix(savingPath, deformedImage);
 }

@@ -17,9 +17,9 @@ private:
 public:
 	RigidRescaler(std::string, std::string);
 	VecDoub getThetaMax(InterpolationMethod *, std::string);
-	void applyDeformation(const VecDoub &thetatMax,
-						  InterpolationMethod *interpolation,
-						  const std::string &savingPath);
+	void applyDeformation(const VecDoub &,
+						  InterpolationMethod *,
+						  const std::string &);
 	NRmatrix<double> readImageFromPGM(const string &) const;
 	template <typename T>
 	void writeFileFromMatrix(const std::string &path, const NRmatrix<T> image) const
