@@ -6,7 +6,11 @@
 class Similarity
 {
 public:
-	double getSimilarity(const NRmatrix<double> &,
-						 const NRmatrix<double> &,
-						 const NRmatrix<bool> &);
+	double getQuadratic(const NRmatrix<double> &,
+						const NRmatrix<double> &,
+						const NRmatrix<bool> &);
+
+	double getMutualInformation(const NRmatrix<double> &,
+								const NRmatrix<double> &,
+								const NRmatrix<bool> &);
 };

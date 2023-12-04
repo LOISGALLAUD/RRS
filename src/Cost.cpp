@@ -17,5 +17,5 @@ double Cost::getCost(const VecDoub &theta) const
 	NRmatrix<double> deformedImage(imageToScale.nrows(), imageToScale.ncols());
 	NRmatrix<bool> binaryImage(imageToScale.nrows(), imageToScale.ncols());
 	deformation.getDeformation(imageToScale, theta, binaryImage, deformedImage, interpolation);
-	return similarity->getSimilarity(deformedImage, referenceImage, binaryImage);
+	return similarity->getMutualInformation(deformedImage, referenceImage, binaryImage);
 }

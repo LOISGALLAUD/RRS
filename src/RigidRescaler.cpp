@@ -83,7 +83,7 @@ void RigidRescaler::applyDeformation(const VecDoub &thetatMax,
 	NRmatrix<bool> binaryImage(imageToScale.ncols(), imageToScale.nrows());
 	def.getDeformation(imageToScale, thetatMax, binaryImage, deformedImage, interpolation);
 
-	double similarityValue = sim.getSimilarity(deformedImage, referenceImage, binaryImage);
+	double similarityValue = sim.getMutualInformation(deformedImage, referenceImage, binaryImage);
 	std::cout << "Similarity for this thetatMax : " << similarityValue << std::endl;
 
 	this->writeFileFromMatrix(savingPath, deformedImage);
