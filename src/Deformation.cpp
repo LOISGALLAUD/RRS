@@ -4,7 +4,7 @@
 #include "Interpolation.h"
 
 void Deformation::getDeformation(const NRmatrix<double> &I,
-								 const double *theta,
+								 const VecDoub &Theta,
 								 NRmatrix<bool> &binaryImage,
 								 NRmatrix<double> &deformedImage,
 								 InterpolationMethod *interp)
@@ -16,14 +16,9 @@ void Deformation::getDeformation(const NRmatrix<double> &I,
 	{
 		for (size_t j = 0; j < copyImage.ncols(); j++)
 		{
-			transf.getNewpixels(i, j, theta, x, y);
-			if (interp == 0)
-			{
-				Interpolation interp;
-				binaryImage[i][j] = interp.getInterpolation(x, y, I, deformedImage[i][j]);
-			}
-			else
-				binaryImage[i][j] = interp->getInterpolation(x, y, I, deformedImage[i][j]);
+
+			transf.getNewpixels(i, j, Theta, x, y);
+			binaryImage[i][j] = interp->getInterpolation(x, y, I, deformedImage[i][j]);
 		}
 	}
 }

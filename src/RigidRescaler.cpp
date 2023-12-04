@@ -42,7 +42,7 @@ NRmatrix<double> RigidRescaler::readImageFromPGM(const string &path) const
 	}
 }
 
-VecDoub RigidRescaler::getThetaMax(InterpolationMethod *interpolation)
+VecDoub RigidRescaler::getThetaMax(InterpolationMethod *interpolation, std::string saving_path)
 {
 	Similarity *similarity = new Similarity();
 	Cost cost(imageToScale, referenceImage, similarity, interpolation);
@@ -55,36 +55,29 @@ VecDoub RigidRescaler::getThetaMax(InterpolationMethod *interpolation)
 
 	// Amoeba method to find the parameters of transformation minimizing cost
 	VecDoub thetatMax(3);
-	thetatMax = amoeba.minimize(ystart, 2., cost);
-
-	for (size_t i = 0; i < thetatMax.size(); i++)
-	{
-		std::cout << "thetatMax[" << i << "] = " << thetatMax[i] << endl;
-	}
-	std::cout << endl;
-
-	/*
-	 * Transformation parameters conversion to a double vector
-	 * to use it in the Deformation class
-	 * and to apply the transformation to the image
-	 */
-	double *theta = new double[3];
-	theta[0] = thetatMax[0];
-	theta[1] = thetatMax[1];
-	theta[2] = thetatMax[2];
-
-	// Recalculating the image I from Iref and theta
-	Deformation def;
-
-	// Deformed image
-	NRmatrix<double> deformedImage(imageToScale.ncols(), imageToScale.nrows());
-	NRmatrix<bool> binaryImage(imageToScale.ncols(), imageToScale.nrows());
-	def.getDeformation(imageToScale, theta, binaryImage, deformedImage, interpolation);
-	std::cout << "Similarity for this thetatMax : " << similarity->getSimilarity(imageToScale, deformedImage, binaryImage) << endl;
-
-	this->writeFileFromMatrix(SAVING_PATH, deformedImage);
+	thetatMax = amoeba.minimize(ystart, 15., cost);
 
 	delete similarity;
 
 	return thetatMax;
+}
+
+void RigidRescaler::applyDeformation(const VecDoub &thetatMax,
+									 InterpolationMethod *interpolation,
+									 const std::string &savingPath)
+{
+	Deformation def;
+	Similarity sim;
+
+	// Deformed image
+	NRmatrix<double> deformedImage(imageToScale.ncols(), imageToScale.nrows());
+	NRmatrix<bool> binaryImage(imageToScale.ncols(), imageToScale.nrows());
+	def.getDeformation(imageToScale, thetatMax, binaryImage, deformedImage, interpolation);
+
+	// Calculate similarity
+	double similarityValue = sim.getSimilarity(deformedImage, referenceImage, binaryImage);
+	std::cout << "Similarity for this thetatMax : " << similarityValue << std::endl;
+
+	// Write deformed image to file
+	this->writeFileFromMatrix(savingPath, deformedImage);
 }

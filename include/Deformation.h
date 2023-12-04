@@ -8,7 +8,7 @@ class Deformation
 {
 public:
 	void getDeformation(const NRmatrix<double> &,
-						const double *,
+						const VecDoub &,
 						NRmatrix<bool> &,
 						NRmatrix<double> &,
 						InterpolationMethod *);

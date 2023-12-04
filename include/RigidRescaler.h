@@ -6,7 +6,6 @@
 #include "nr3.h"
 #include "amoeba.h"
 #include "Cost.h"
-#define SAVING_PATH "deformed.pgm"
 
 class RigidRescaler
 {
@@ -17,7 +16,10 @@ private:
 
 public:
 	RigidRescaler(std::string, std::string);
-	VecDoub getThetaMax(InterpolationMethod *);
+	VecDoub getThetaMax(InterpolationMethod *, std::string);
+	void applyDeformation(const VecDoub &thetatMax,
+						  InterpolationMethod *interpolation,
+						  const std::string &savingPath);
 	NRmatrix<double> readImageFromPGM(const string &) const;
 	template <typename T>
 	void writeFileFromMatrix(const std::string &path, const NRmatrix<T> image) const
