@@ -3,6 +3,7 @@
 #include "Interpolation.h"
 #include "amoeba.h"
 #include "Cost.h"
+#define GREY_SAVE_PATH "grey.pgm"
 
 #define EPSILON 0.001
 
@@ -47,6 +48,13 @@ VecDoub RigidRescaler::getThetaMax(InterpolationMethod *interpolation, std::stri
 	Similarity *similarity = new Similarity();
 	Cost cost(imageToScale, referenceImage, similarity, interpolation);
 	Amoeba amoeba(EPSILON);
+
+	// Modify grey scale of the image before the minimization
+	Deformation deformation;
+	deformation.greyScale(imageToScale);
+	this->writeFileFromMatrix(GREY_SAVE_PATH, imageToScale);
+
+	// ------------------------------------------------------------------
 
 	VecDoub ystart(3); // Starting point for the minimization
 	ystart[0] = 0;

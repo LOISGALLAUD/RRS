@@ -12,4 +12,5 @@ public:
 						NRmatrix<bool> &,
 						NRmatrix<double> &,
 						InterpolationMethod *);
+	void greyScale(NRmatrix<double> &);
 };

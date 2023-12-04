@@ -22,3 +22,13 @@ void Deformation::getDeformation(const NRmatrix<double> &I,
 		}
 	}
 }
+void Deformation::greyScale(NRmatrix<double> &I)
+{
+	for (size_t i = 0; i < I.nrows(); i++)
+	{
+		for (size_t j = 0; j < I.ncols(); j++)
+		{
+			I[i][j] = std::min(2 * std::abs(I[i][j] - 128.0), 255.0);
+		}
+	}
+}

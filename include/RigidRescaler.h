@@ -51,4 +51,8 @@ public:
 			}
 		}
 	}
+	NRmatrix<double> getImageToScale() const
+	{
+		return imageToScale;
+	}
 };
