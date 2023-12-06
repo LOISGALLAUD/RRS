@@ -5,6 +5,9 @@ cmake_minimum_required(VERSION 2.6)
 project(demo_cpp)
 # Impose le répertoire de création du fichier exécutable
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # Impose le répertoire des fichiers source
 set(CMAKE_CURRENT_SOURCE_DIR ${CMAKE_BINARY_DIR}/../src)
 # Ajoute le répertoire include des fichiers .h au chemin de recherche des #include "xx.h"
