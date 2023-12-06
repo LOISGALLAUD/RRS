@@ -21,7 +21,6 @@ file(
    srcFiles
    ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
 )
-# Crée l'exécutable monExe à partir de la liste des fichiers .cpp
 add_executable(
    rrs
    ${srcFiles}
